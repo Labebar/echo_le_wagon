@@ -8,6 +8,7 @@ class Content < ApplicationRecord
   has_many :notes, dependent: :destroy
   scope :by_recent, -> { order(created_at: :desc) }
   has_many :messages, dependent: :destroy
+  has_many :quiz_results, dependent: :destroy
 
 
     # after_commit :generate_stuff_content, on: [:create]

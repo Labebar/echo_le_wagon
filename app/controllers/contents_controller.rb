@@ -84,6 +84,12 @@ class ContentsController < ApplicationController
   def results
     @content = Content.find(params[:id])
     @questions = @content.questions
+    validated_count = @questions.where(validated: true).count
+    total_count = @questions.count
+    quiz_result = QuizResult.find_or_initialize_by(user: current_user, content: @content)
+    quiz_result.correct_answers = validated_count
+    quiz_result.total_questions = total_count
+    quiz_result.save!
   end
 
   private

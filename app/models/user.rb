@@ -4,6 +4,7 @@ class User < ApplicationRecord
   has_many :contents, dependent: :destroy
   has_many :answers, dependent: :destroy
   has_many :notes, dependent: :destroy
+  has_many :quiz_results, dependent: :destroy
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :validatable
   validates :nickname, presence: true, uniqueness: true

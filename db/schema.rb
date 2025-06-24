@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2025_06_11_123013) do
+ActiveRecord::Schema[7.1].define(version: 2025_06_24_100314) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -109,6 +109,17 @@ ActiveRecord::Schema[7.1].define(version: 2025_06_11_123013) do
     t.datetime "updated_at", null: false
     t.boolean "validated", default: false, null: false
     t.index ["content_id"], name: "index_questions_on_content_id"
+  end
+
+  create_table "quiz_results", force: :cascade do |t|
+    t.bigint "user_id", null: false
+    t.bigint "content_id", null: false
+    t.integer "correct_answers"
+    t.integer "total_questions"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["content_id"], name: "index_quiz_results_on_content_id"
+    t.index ["user_id"], name: "index_quiz_results_on_user_id"
   end
 
   create_table "solid_cable_messages", force: :cascade do |t|
@@ -272,6 +283,8 @@ ActiveRecord::Schema[7.1].define(version: 2025_06_11_123013) do
   add_foreign_key "notes", "contents"
   add_foreign_key "notes", "users"
   add_foreign_key "questions", "contents"
+  add_foreign_key "quiz_results", "contents"
+  add_foreign_key "quiz_results", "users"
   add_foreign_key "solid_queue_blocked_executions", "solid_queue_jobs", column: "job_id", on_delete: :cascade
   add_foreign_key "solid_queue_claimed_executions", "solid_queue_jobs", column: "job_id", on_delete: :cascade
   add_foreign_key "solid_queue_failed_executions", "solid_queue_jobs", column: "job_id", on_delete: :cascade
