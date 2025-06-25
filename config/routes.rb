@@ -6,7 +6,7 @@ Rails.application.routes.draw do
   # Health check & test
   get "up" => "rails/health#show", as: :rails_health_check
   get "test", to: "pages#test"
-
+  get "profile", to: "users#profile"
 
 
 

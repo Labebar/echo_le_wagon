@@ -5,8 +5,8 @@ class User < ApplicationRecord
   has_many :answers, dependent: :destroy
   has_many :notes, dependent: :destroy
   has_many :quiz_results, dependent: :destroy
+  has_one_attached :avatar
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :validatable
   validates :nickname, presence: true, uniqueness: true
-
 end

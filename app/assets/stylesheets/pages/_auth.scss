@@ -59,6 +59,44 @@ body {
       cursor: pointer;
       font-size: 0.95rem;
     }
+
+   input[type="file"].auth-input {
+    background-color: #f9fafb !important;
+    color: #111827 !important;
+    border: 1px solid #d1d5db;
+    border-radius: 10px;
+    padding: 0.6rem 1rem;
+    font-size: 0.9rem;
+    cursor: pointer;
+
+  /* Force visibilité sur Chrome */
+      ::file-selector-button {
+        background-color: #e5e7eb;
+        color: #111827;
+        border: none;
+        padding: 0.5rem 1rem;
+        border-radius: 6px;
+        cursor: pointer;
+      }
+
+      /* Safari / Firefox fallback */
+      &::-webkit-file-upload-button {
+        background-color: #e5e7eb;
+        color: #111827;
+        border: none;
+        padding: 0.5rem 1rem;
+        border-radius: 6px;
+        cursor: pointer;
+      }
+    }
+    input[type="file"].auth-input:hover {
+    background-color: #dee0e4;
+    }
+
+    input[type="file"].auth-input:focus {
+    outline: none;
+    border-color: #9ca3af;
+    }
   }
 
   .remember-me {
@@ -85,4 +123,33 @@ body {
       text-decoration: underline;
     }
   }
+}
+
+.auth-button-red {
+      background-color:#e74c3c;
+      color: $dark;
+      font-weight: bold;
+      border: none;
+      padding: 0.9rem;
+      border-radius: 9999px;
+      text-transform: uppercase;
+      cursor: pointer;
+      font-size: 0.95rem;
+}
+
+.custom-file-input {
+  display: block;
+  width: 100%;
+  font-size: 0.875rem; /* équivaut à text-sm */
+  color: #111827;       /* text-gray-900 */
+  background-color: #f9fafb; /* bg-gray-50 */
+  border: 1px solid #d1d5db; /* border-gray-300 */
+  border-radius: 0.5rem;     /* rounded-lg (~8px) */
+  cursor: pointer;
+  outline: none;
+}
+
+.custom-file-input:focus {
+  box-shadow: none;
+  border-color: #a1a1aa; /* Optional: border change on focus */
 }
