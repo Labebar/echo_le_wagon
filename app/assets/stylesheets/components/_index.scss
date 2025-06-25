@@ -8,15 +8,6 @@
 @import "results";
 @import "spinner";
 @import "animation_chat";
-
-
-
-.container-custom {
-  width: 87%;
-  margin: auto;
-
-}
-
 @import "buttons";
 @import "lecteur_video";
 @import "frame";
@@ -27,7 +18,17 @@
 @import "form-floating";
 @import "spacing_elements";
 @import "chat";
+@import "summary_text";
+@import "spinner";
+@import "flashes";
+@import "progress_bar";
+@import "profile";
 
+.container-custom {
+  width: 87%;
+  margin: auto;
+
+}
 
 .glow {
   box-shadow: 0 0 50px rgba(255, 255, 255, 0.35);
@@ -35,9 +36,6 @@
 .glow-light {
   box-shadow: 0 0 30px rgba(255, 255, 255, 0.10);
 }
-@import "summary_text";
-@import "spinner";
-@import "flashes";
 
 
 .sticky-bottom {

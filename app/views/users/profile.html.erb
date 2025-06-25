@@ -1,3 +1,49 @@
-<h1><%= @user.nickname.capitalize %></h1>
-<%= @formatted_score %>
-<p>Contents added: <%= @content_number %></p>
+<div class="container-custom">
+  <div class="profile-flex">
+    <h1><%= @user.nickname.capitalize %></h1>
+    <%= user_avatar_tag(@user, class: "avatar-large") %>
+  </div>
+  <p>Contents added: <%= @content_number %></p>
+  <p>Favorite topic(s): <%= @top_tags.map(&:name).to_sentence %></p>
+  <p>Quizz success rate: </p>
+
+  <% unless @formatted_score == 0 %>
+    <div class="progress-bar-container">
+      <div class="progress-bar-fill" style="width: <%= @formatted_score %>%; background: <%= @score_color %>;">
+        <%= @formatted_score %>%
+      </div>
+    </div>
+  <% end %>
+  <br>
+  <%= column_chart @quizzes_per_day,
+    xtitle: "Weeks",
+    ytitle: "Completed quizzes",
+    colors: ["#139986"],
+    library: {
+      scales: {
+        y: {
+          min: 0,
+          max: 10,
+          ticks: {
+            stepSize: 1,
+            precision: 0
+          },
+          title: {
+            color: "#ffffff",
+            font: {
+              size: 14
+            }
+          }
+        },
+        x: {
+          title: {
+            color: "#ffffff",
+            font: {
+              size: 14
+            }
+          }
+        }
+      }
+    }
+  %>
+</div>

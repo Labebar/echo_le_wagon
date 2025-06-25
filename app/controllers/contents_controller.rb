@@ -89,6 +89,9 @@ class ContentsController < ApplicationController
     quiz_result = QuizResult.find_or_initialize_by(user: current_user, content: @content)
     quiz_result.correct_answers = validated_count
     quiz_result.total_questions = total_count
+    if @questions.where(validated: true).count == @questions.count && quiz_result.completed_at.nil?
+      quiz_result.update(completed_at: Time.current)
+    end
     quiz_result.save!
   end
 
@@ -106,6 +109,7 @@ class ContentsController < ApplicationController
     @personal_playlists = @favorite_tags.each_with_object({}) do |tag, hash|
       contents = Content.joins(:content_tags)
                         .where(content_tags: { favorite: true, tag_id: tag.id })
+                        .where(user: current_user)
       hash[tag] = contents if contents.any?
     end
   end

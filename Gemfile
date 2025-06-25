@@ -57,6 +57,10 @@ gem "simple_form", github: "heartcombo/simple_form"
 gem "sassc-rails"
 gem "solid_queue"
 gem "solid_cable"
+gem 'chart-js-rails', '~> 0.1.7'
+gem "chartkick"
+gem "groupdate"
+
 group :development, :test do
   gem "dotenv-rails"
   # See https://guides.rubyonrails.org/debugging_rails_applications.html#debugging-with-the-debug-gem
