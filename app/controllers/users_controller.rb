@@ -7,6 +7,8 @@ class UsersController < ApplicationController
     quiz_rate
     best_category
     color
+    elo_data
+    elo_progression
   end
 
   private
@@ -40,5 +42,28 @@ class UsersController < ApplicationController
                    else
                      "#139986"
                    end
+  end
+
+  def elo_data
+    @elo_data = current_user.elo_histories.order(created_at: :asc).map do |h|
+      [h.created_at.strftime('%Y-%m-%d'), h.value]
+    end
+  end
+
+  def elo_progression
+    seven_days_ago = 6.days.ago.beginning_of_day
+
+    # Cherche la dernière valeur connue *avant ou à* 7 jours
+    past_elo = current_user.elo_histories
+                           .where('created_at <= ?', seven_days_ago)
+                           .order(created_at: :desc)
+                           .limit(1)
+                           .pluck(:value)
+                           .first
+
+    # Si aucune entrée trouvée, utiliser 1500 comme valeur de départ
+    past_elo ||= 1500
+
+    @elo_change = current_user.elo_score - past_elo
   end
 end

@@ -46,4 +46,28 @@
       }
     }
   %>
+  <p>Quizz rating</p>
+  <h4><strong><%= @user.elo_score %></strong></h4>
+  <p>
+    <% if @elo_change > 0 %>
+      <span class="elo-change up">↑ <%= @elo_change %></span>
+    <% elsif @elo_change < 0 %>
+      <span class="elo-change down">↓ <%= @elo_change.abs %></span>
+    <% else %>
+    <% end %>
+  </p>
+  <br>
+  <%= line_chart @elo_data,
+    library: {
+      scales: {
+        y: {
+          min: 0,
+          max: 3000,
+          ticks: {
+            stepSize: 100
+          }
+        }
+      }
+    }
+  %>
 </div>

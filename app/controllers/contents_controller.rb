@@ -86,11 +86,17 @@ class ContentsController < ApplicationController
     @questions = @content.questions
     validated_count = @questions.where(validated: true).count
     total_count = @questions.count
+
     quiz_result = QuizResult.find_or_initialize_by(user: current_user, content: @content)
     quiz_result.correct_answers = validated_count
     quiz_result.total_questions = total_count
-    if @questions.where(validated: true).count == @questions.count && quiz_result.completed_at.nil?
-      quiz_result.update(completed_at: Time.current)
+
+    if validated_count == total_count && quiz_result.completed_at.nil?
+      quiz_result.completed_at = Time.current
+    end
+    unless quiz_result.elo_updated
+      current_user.update_elo_for_quiz(validated_count, quiz_result)
+      quiz_result.elo_updated = true
     end
     quiz_result.save!
   end

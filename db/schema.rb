@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2025_06_25_125907) do
+ActiveRecord::Schema[7.1].define(version: 2025_06_26_124755) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -77,6 +77,16 @@ ActiveRecord::Schema[7.1].define(version: 2025_06_25_125907) do
     t.index ["user_id"], name: "index_contents_on_user_id"
   end
 
+  create_table "elo_histories", force: :cascade do |t|
+    t.integer "value"
+    t.bigint "user_id", null: false
+    t.bigint "quiz_result_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["quiz_result_id"], name: "index_elo_histories_on_quiz_result_id"
+    t.index ["user_id"], name: "index_elo_histories_on_user_id"
+  end
+
   create_table "messages", force: :cascade do |t|
     t.text "user_question"
     t.text "ai_answer"
@@ -119,6 +129,7 @@ ActiveRecord::Schema[7.1].define(version: 2025_06_25_125907) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.datetime "completed_at"
+    t.boolean "elo_updated", default: false, null: false
     t.index ["content_id"], name: "index_quiz_results_on_content_id"
     t.index ["user_id"], name: "index_quiz_results_on_user_id"
   end
@@ -269,6 +280,7 @@ ActiveRecord::Schema[7.1].define(version: 2025_06_25_125907) do
     t.datetime "updated_at", null: false
     t.string "nickname"
     t.string "avatar"
+    t.integer "elo_score", default: 1500, null: false
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
@@ -280,6 +292,8 @@ ActiveRecord::Schema[7.1].define(version: 2025_06_25_125907) do
   add_foreign_key "content_tags", "contents"
   add_foreign_key "content_tags", "tags"
   add_foreign_key "contents", "users"
+  add_foreign_key "elo_histories", "quiz_results"
+  add_foreign_key "elo_histories", "users"
   add_foreign_key "messages", "contents"
   add_foreign_key "notes", "contents"
   add_foreign_key "notes", "users"
